@@ -13,6 +13,8 @@
 // limitations under the License.
 
 // ignore_for_file: format-comment
+import 'dart:ui';
+
 import 'package:bottom_sheet/src/flexible_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
@@ -59,6 +61,7 @@ Future<T?> showFlexibleBottomSheet<T>({
   bool isModal = true,
   List<double>? anchors,
   Color? keyboardBarrierColor,
+  ImageFilter? backgroundFilter,
   Color? bottomSheetColor,
   BorderRadiusGeometry? bottomSheetBorderRadius,
   Color? barrierColor,
@@ -79,6 +82,7 @@ Future<T?> showFlexibleBottomSheet<T>({
       minHeight: minHeight ?? 0,
       initHeight: initHeight ?? 0.5,
       maxHeight: maxHeight ?? 1,
+      backgroundFilter: backgroundFilter,
       isCollapsible: isCollapsible,
       isDismissible: isDismissible,
       isExpand: isExpand,
@@ -136,6 +140,7 @@ Future<T?> showStickyFlexibleBottomSheet<T>({
   double? minHeight,
   double? initHeight,
   double? maxHeight,
+  ImageFilter? backgroundFilter,
   bool isCollapsible = true,
   bool isDismissible = true,
   bool isExpand = true,
@@ -167,6 +172,7 @@ Future<T?> showStickyFlexibleBottomSheet<T>({
       initHeight: initHeight ?? 0.5,
       maxHeight: maxHeight ?? 1,
       isCollapsible: isCollapsible,
+      backgroundFilter: backgroundFilter,
       isDismissible: isDismissible,
       draggableScrollableController: draggableScrollableController,
       isExpand: isExpand,
@@ -193,6 +199,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
   final FlexibleDraggableScrollableWidgetBuilder? builder;
   final FlexibleDraggableScrollableHeaderWidgetBuilder? headerBuilder;
   final FlexibleDraggableScrollableWidgetBodyBuilder? bodyBuilder;
+  final ImageFilter? backgroundFilter;
   final DraggableScrollableController? draggableScrollableController;
   final double minHeight;
   final double initHeight;
@@ -243,6 +250,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
     this.draggableScrollableController,
     this.builder,
     this.headerBuilder,
+    this.backgroundFilter,
     this.bodyBuilder,
     this.theme,
     this.barrierLabel,
@@ -290,6 +298,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
               isExpand: isExpand,
               animationController: _animationController,
               anchors: anchors,
+              backgroundFilter: backgroundFilter,
               draggableScrollableController: draggableScrollableController,
               minHeaderHeight: minHeaderHeight,
               maxHeaderHeight: maxHeaderHeight,
@@ -304,6 +313,7 @@ class FlexibleBottomSheetRoute<T> extends PopupRoute<T> {
               minHeight: minHeight,
               initHeight: initHeight,
               maxHeight: maxHeight,
+              backgroundFilter: backgroundFilter,
               builder: builder,
               headerBuilder: headerBuilder,
               bodyBuilder: bodyBuilder,

@@ -11,6 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import 'dart:ui';
+
 import 'package:bottom_sheet/src/flexible_bottom_sheet_header_delegate.dart';
 import 'package:bottom_sheet/src/widgets/change_insets_detector.dart';
 import 'package:bottom_sheet/src/widgets/scroll_behavior_in_web.dart';
@@ -106,6 +108,7 @@ class FlexibleBottomSheet<T> extends StatefulWidget {
   final double? minHeaderHeight;
   final double? maxHeaderHeight;
   final Decoration? decoration;
+  final ImageFilter? backgroundFilter;
   final VoidCallback? onDismiss;
   final Color? keyboardBarrierColor;
   final Color? bottomSheetColor;
@@ -130,6 +133,7 @@ class FlexibleBottomSheet<T> extends StatefulWidget {
     this.maxHeaderHeight,
     this.decoration,
     this.onDismiss,
+    this.backgroundFilter,
     this.keyboardBarrierColor,
     this.bottomSheetColor,
     this.bottomSheetBorderRadius,
@@ -156,6 +160,7 @@ class FlexibleBottomSheet<T> extends StatefulWidget {
     AnimationController? animationController,
     List<double>? anchors,
     double? minHeaderHeight,
+    ImageFilter? backgroundFilter,
     double? maxHeaderHeight,
     Decoration? decoration,
     Color? keyboardBarrierColor,
@@ -173,6 +178,7 @@ class FlexibleBottomSheet<T> extends StatefulWidget {
           minHeight: 0,
           initHeight: initHeight,
           isCollapsible: true,
+          backgroundFilter: backgroundFilter,
           isExpand: isExpand,
           animationController: animationController,
           anchors: anchors,
@@ -341,6 +347,7 @@ class _FlexibleBottomSheetState<T> extends State<FlexibleBottomSheet<T>> {
         );
 
     final behaviorScroll = _getScrollBehaviorInWeb();
+
     final bottomSheet = NotificationListener<DraggableScrollableNotification>(
       onNotification: _scrolling,
       child: DraggableScrollableSheet(
@@ -415,9 +422,19 @@ class _FlexibleBottomSheetState<T> extends State<FlexibleBottomSheet<T>> {
       ),
     );
 
-    return behaviorScroll == null
+    final result = behaviorScroll == null
         ? bottomSheet
         : ScrollConfiguration(behavior: behaviorScroll, child: bottomSheet);
+
+    final backgroundFilter = widget.backgroundFilter;
+    if (backgroundFilter == null) {
+      return result;
+    }
+
+    return BackdropFilter(
+      filter: backgroundFilter,
+      child: result,
+    );
   }
 
   MaterialScrollBehavior? _getScrollBehaviorInWeb() {

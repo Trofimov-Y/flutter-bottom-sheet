@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import 'dart:ui';
+
 import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -45,6 +47,7 @@ void main() {
     bool? isDismissible,
     bool? isSafeArea,
     double? minHeight,
+    ImageFilter? backgroundFilter,
     double? initHeight,
     double? maxHeight,
     bool? isModal,
@@ -58,6 +61,7 @@ void main() {
       initHeight: initHeight ?? 0.5,
       maxHeight: maxHeight ?? 0.8,
       context: savedContext,
+      backgroundFilter: backgroundFilter,
       isCollapsible: isCollapsible ?? true,
       isDismissible: isDismissible ?? true,
       isSafeArea: isSafeArea ?? false,
